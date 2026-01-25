@@ -1,0 +1,32 @@
+# Упрощенный Doxyfile для Python проекта
+
+# Основные настройки проекта
+PROJECT_NAME           = "Authentication App"
+PROJECT_NUMBER         = 1.0
+PROJECT_BRIEF          = "Простое приложение аутентификации"
+OUTPUT_DIRECTORY       = docs
+OUTPUT_LANGUAGE        = Russian
+
+# Настройки ввода
+INPUT                  = src
+FILE_PATTERNS          = *.py
+RECURSIVE              = YES
+EXCLUDE                = 
+
+# Настройки извлечения
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+
+# Настройки вывода
+GENERATE_HTML          = YES
+HTML_OUTPUT            = html
+GENERATE_TREEVIEW      = NO
+
+# Настройки поиска
+SEARCHENGINE           = YES
+
+# Опционально (можно удалить если не нужны)
+GENERATE_LATEX         = NO
+GENERATE_MAN           = NO
+GENERATE_RTF           = NO
