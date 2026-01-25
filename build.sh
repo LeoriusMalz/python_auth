@@ -29,22 +29,39 @@ EOF
 # Функция для валидации ввода DEBUG
 validate_debug() {
     local input="$1"
-    if [[ "$input" =~ ^[YyДд]?$ ]] || [[ "$input" == "true" ]] || [[ "$input" == "1" ]]; then
-        echo "true"
-    elif [[ "$input" =~ ^[NnНн]?$ ]] || [[ "$input" == "false" ]] || [[ "$input" == "0" ]]; then
-        echo "false"
+    
+    # Если ввод пустой - возвращаем false (по умолчанию)
+    if [ -z "$input" ]; then
+        echo "False"
+        return 0
+    fi
+    
+    # Проверка положительных ответов (debug режим)
+    if [[ "$input" =~ ^[YyДд]$ ]] || [[ "$input" == "true" ]] || [[ "$input" == "1" ]]; then
+        echo "True"
+    # Проверка отрицательных ответов (release режим)
+    elif [[ "$input" =~ ^[NnНн]$ ]] || [[ "$input" == "false" ]] || [[ "$input" == "0" ]]; then
+        echo "False"
     else
-        echo ""
+        echo ""  # Некорректный ввод
     fi
 }
 
 # Функция для валидации ввода START_ATTEMPTS
 validate_attempts() {
     local input="$1"
+    
+    # Если ввод пустой - возвращаем 3 (по умолчанию)
+    if [ -z "$input" ]; then
+        echo "3"
+        return 0
+    fi
+    
+    # Проверка числового ввода
     if [[ "$input" =~ ^[0-9]+$ ]] && [ "$input" -ge 1 ] && [ "$input" -le 10 ]; then
         echo "$input"
     else
-        echo ""
+        echo ""  # Некорректный ввод
     fi
 }
 
@@ -61,8 +78,8 @@ read -p "Сборка в режиме DEBUG? [y/N] (по умолчанию N): 
 debug_input=$(validate_debug "$debug_input")
 
 if [ -z "$debug_input" ]; then
-    echo "Некорректный ввод! Используется значение по умолчанию: false"
-    debug_input="false"
+    echo "Некорректный ввод! Используется значение по умолчанию: False"
+    debug_input="False"
 fi
 
 # Запрос количества попыток
@@ -104,7 +121,7 @@ else
 fi
 
 # Определение параметров сборки
-if [ "$debug_input" == "true" ]; then
+if [ "$debug_input" == "True" ]; then
     build_dir="build/debug"
     console_param="--console"
     echo "Режим сборки: DEBUG"

@@ -28,7 +28,7 @@
 ## @var DEBUG
 # @brief Флаг отладочного режима
 # @details True - отладочный режим (с консолью), False - релизный режим
-DEBUG=True
+DEBUG=False
 
 ## @var START_ATTEMPTS  
 # @brief Начальное количество попыток входа
