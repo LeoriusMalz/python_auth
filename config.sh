@@ -20,7 +20,7 @@ apt install -y python3-pip
 
 # Установка pyinstaller
 echo "Установка pyinstaller..."
-pip3 install pyinstaller
+pip3 install pyinstaller --break-system-packages
 
 # Установка doxygen
 echo "Установка doxygen..."

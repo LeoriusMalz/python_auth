@@ -8,6 +8,10 @@ TODO:
 
 ## Порядок запуска с нуля (проверялось на live usb с Debian 12.5.0 amd64 Cinnamon)
 
+*ВНИМАНИЕ:* pyinstaller устанавливается через pip3 с флагом --break-system-packages!
+
+Не забудьте сделать chmod +x *.sh перед запуском скриптов.
+
 ### Установка зависимостей
 
 sudo ./config.sh
