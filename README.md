@@ -1,5 +1,8 @@
 # Простое python приложение аутентификации с GUI на tkinter для Debian 12
 
+#### SAST pipeline status: [![SAST Analysis](https://github.com/LeoriusMalz/python_auth/actions/workflows/sast.yml/badge.svg)](https://github.com/LeoriusMalz/python_auth/actions/workflows/sast.yml)
+
+
 TODO:
 
 1. Добавить соль к паролю перед хешированием.
