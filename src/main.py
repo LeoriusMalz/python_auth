@@ -19,50 +19,52 @@
 - Валидация ввода пользователя
 
 @section usage Использование
-Запустите приложение и введите логин/пароль. 
+Запустите приложение и введите логин/пароль.
 В отладочном режиме видны дополнительные сообщения в консоли.
 
 @note В отладочном режиме пароли выводятся в консоль для тестирования!
 """
 
-## @var DEBUG
+import tkinter as tk
+from hashlib import sha256
+
+# @var DEBUG
 # @brief Флаг отладочного режима
 # @details True - отладочный режим (с консолью), False - релизный режим
-DEBUG=False
+DEBUG = False
 
-## @var START_ATTEMPTS  
+# @var START_ATTEMPTS
 # @brief Начальное количество попыток входа
 # @details Минимальное значение: 1, максимальное: 10 (см. build.sh)
-START_ATTEMPTS=3
+START_ATTEMPTS = 3
 
-## @var ATTEMPTS
+# @var ATTEMPTS
 # @brief Текущее количество оставшихся попыток
 # @details Уменьшается при каждой неудачной попытке входа
 ATTEMPTS = START_ATTEMPTS
 
-import tkinter as tk
-from hashlib import sha256 
-
-## @var DATABASE
+# @var DATABASE
 # @brief Словарь для хранения пользователей и их хешированных паролей
 # @details Ключ - логин, значение - SHA-256 хеш пароля
 DATABASE = dict()
+
 
 def myhash(s):
     """
     @brief Вычисляет SHA-256 хеш строки
     @param s Входная строка для хеширования
     @return HEX-строка с хешем длиной 64 символа
-    
+
     @details
     Функция использует стандартную библиотеку hashlib.
     Хеш возвращается в шестнадцатеричном формате.
     """
     return sha256(s.encode('utf-8')).hexdigest()
 
+
 # Инициализация базы данных в зависимости от режима
 if DEBUG:
-    ## @var title
+    # @var title
     # @brief Заголовок окна в отладочном режиме
     title = "Версия для отладки"
     print(title)
@@ -70,21 +72,25 @@ if DEBUG:
     DATABASE["user"] = myhash("1234")
     print(f"DATABASE = {DATABASE}")
 else:
-    ## @var title
+    # @var title
     # @brief Заголовок окна в релизном режиме
     title = "Релизная версия"
-    DATABASE["admin"] = "a35c5f63916fff41369754c7a01cc4a82e9e3e5f1e05628791b5f5770435d6b0" # @dm1n
-    DATABASE["vovuas"] = "77459b9b941bcb4714d0c121313c900ecf30541d158eb2b9b178cdb8eca6457e" # 2003
+    DATABASE["admin"] = ("a35c5f63916fff41369754c7a01cc4a8"
+                         "2e9e3e5f1e05628791b5f5770435d6b0")  # @dm1n
+    DATABASE["vovuas"] = ("77459b9b941bcb4714d0c121313c900e"
+                          "cf30541d158eb2b9b178cdb8eca6457e")  # 2003
 
-## @var window
+# @var window
 # @brief Главное окно приложения
 window = tk.Tk()
 window.title(title)
 
-## @var frame_buttons
+# @var frame_buttons
 # @brief Фрейм для размещения кнопок
 frame_buttons = tk.Frame(window)
-frame_buttons.pack(side = tk.TOP, fill = tk.X)
+frame_buttons.pack(side=tk.TOP,
+                   fill=tk.X)
+
 
 def mymessagebox(fontsize, butsize, mytitle, mytext):
     """
@@ -93,7 +99,7 @@ def mymessagebox(fontsize, butsize, mytitle, mytext):
     @param butsize Размер шрифта кнопки
     @param mytitle Заголовок окна
     @param mytext Текст сообщения
-    
+
     @details
     Создает модальное окно с текстом сообщения и кнопкой "Закрыть".
     Окно позиционируется относительно главного окна приложения.
@@ -102,10 +108,17 @@ def mymessagebox(fontsize, butsize, mytitle, mytext):
     toplevel.title(mytitle)
     toplevel.geometry(f"180x120+{window.winfo_x()+8}+{window.winfo_y()+3}")
     toplevel.resizable(False, False)
-    l = tk.Label(toplevel, text = mytext, font = ("TkDefaultFont", fontsize))
-    l.pack()
-    b = tk.Button(toplevel, text = "Закрыть", command = toplevel.destroy, width = 10, font = ("TkDefaultFont", butsize))
+    lab = tk.Label(toplevel,
+                   text=mytext,
+                   font=("TkDefaultFont", fontsize))
+    lab.pack()
+    b = tk.Button(toplevel,
+                  text="Закрыть",
+                  command=toplevel.destroy,
+                  width=10,
+                  font=("TkDefaultFont", butsize))
     b.pack()
+
 
 def show_error():
     """
@@ -114,12 +127,14 @@ def show_error():
     """
     mymessagebox(12, 12, "Ошибка!", "Что-то пошло\nне так.")
 
+
 def show_good_login():
     """
     @brief Показывает окно успешной аутентификации
     @details Вызывается при корректном вводе логина и пароля
     """
     mymessagebox(15, 15, "Успех!", "Доступ\nразрешён!")
+
 
 def show_bad_login():
     """
@@ -128,19 +143,21 @@ def show_bad_login():
     """
     mymessagebox(15, 15, "Неудача!", "Доступ\nзапрещён!")
 
+
 def login():
     """
     @brief Выполняет аутентификацию пользователя
     @details Проверяет логин и пароль, управляет количеством попыток
-    
+
     @par Алгоритм работы:
     1. Получает логин и пароль из полей ввода
     2. Хеширует пароль
     3. Проверяет наличие логина в базе данных
     4. Сравнивает хеши паролей
     5. Обрабатывает результат с учетом оставшихся попыток
-    
-    @note В отладочном режиме выводит подробную информацию в консоль, а также восстанавливает количество доступных попыток
+
+    @note В отладочном режиме выводит подробную информацию в
+    консоль, а также восстанавливает количество доступных попыток
     """
     global ATTEMPTS
     login = entry0.get()
@@ -166,7 +183,8 @@ def login():
         raise
     if ATTEMPTS == 0:
         if DEBUG:
-            print(f"ATTEMPTS == 0, real result of auth = {res}, reason = {reason}; ATTEMPTS = {START_ATTEMPTS} (refreshing)")
+            print(f"ATTEMPTS == 0, real result of auth = {res}, "
+                  f"reason = {reason}; ATTEMPTS = {START_ATTEMPTS} (refreshing)")
             ATTEMPTS = START_ATTEMPTS
         show_bad_login()
     else:
@@ -180,6 +198,7 @@ def login():
                 print(f"bad auth, reason = {reason}")
             show_bad_login()
 
+
 def clear_fields():
     """
     @brief Очищает поля ввода логина и пароля
@@ -187,12 +206,19 @@ def clear_fields():
     entry0.delete(0, tk.END)
     entry1.delete(0, tk.END)
 
+
 def show_help():
     """
     @brief Показывает окно с помощью
     @details Отображает инструкцию по использованию и количество оставшихся попыток
     """
-    mymessagebox(11, 11, "Помощь", f"Первая строка - логин,\nвторая строка - пароль.\nОсталось попыток: {ATTEMPTS}.")
+    mymessagebox(11,
+                 11,
+                 "Помощь",
+                 f"Первая строка - логин,"
+                 f"\nвторая строка - пароль."
+                 f"\nОсталось попыток: {ATTEMPTS}.")
+
 
 def button0_click():
     """
@@ -206,6 +232,7 @@ def button0_click():
             print(f"button0_click error:\n{e}")
         show_error()
 
+
 def button1_click():
     """
     @brief Обработчик нажатия кнопки "очистка полей"
@@ -217,6 +244,7 @@ def button1_click():
         if DEBUG:
             print(f"button1_click error:\n{e}")
         show_error()
+
 
 def button2_click():
     """
@@ -230,32 +258,38 @@ def button2_click():
             print(f"button2_click error:\n{e}")
         show_error()
 
-## @var buttons
+
+# @var buttons
 # @brief Список кнопок интерфейса
 buttons = []
 
-## @var but_names
+# @var but_names
 # @brief Тексты для кнопок интерфейса
 but_names = ["    войти    ", "    очистка полей    ", "    помощь    "]
 
-## @var but_com
+# @var but_com
 # @brief Список функций-обработчиков для кнопок
 but_com = [button0_click, button1_click, button2_click]
 
 # Создание и размещение кнопок
 for i in range(3):
-    buttons.append(tk.Button(frame_buttons, text = but_names[i], command = but_com[i]))
+    buttons.append(tk.Button(frame_buttons,
+                             text=but_names[i],
+                             command=but_com[i]))
 
 for button in buttons:
-    button.pack(side = tk.LEFT)
+    button.pack(side=tk.LEFT)
 
-## @var entry0
+# @var entry0
 # @brief Поле ввода для логина
-entry0 = tk.Entry(window, width = 30)
+entry0 = tk.Entry(window,
+                  width=30)
 
-## @var entry1
+# @var entry1
 # @brief Поле ввода для пароля (замена символов на звёздочки)
-entry1 = tk.Entry(window, width = 30, show = "*")
+entry1 = tk.Entry(window,
+                  width=30,
+                  show="*")
 
 entry0.pack()
 entry1.pack()
