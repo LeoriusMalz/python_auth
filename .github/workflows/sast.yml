@@ -32,3 +32,18 @@ jobs:
         with:
           name: sast-reports
           path: reports/
+
+      - name: Commit reports
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+          git add reports/
+          git commit -m "Update SAST reports" || echo "No changes"
+          git push
+
+      - name: Summary
+        run: |
+          echo "## SAST Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Bandit: completed" >> $GITHUB_STEP_SUMMARY
+          echo "- Flake8: completed" >> $GITHUB_STEP_SUMMARY
+          echo "- Radon: completed" >> $GITHUB_STEP_SUMMARY

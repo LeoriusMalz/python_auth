@@ -1,7 +1,13 @@
 # Простое python приложение аутентификации с GUI на tkinter для Debian 12
 
-#### SAST pipeline status: [![SAST Analysis](https://github.com/LeoriusMalz/python_auth/actions/workflows/sast.yml/badge.svg)](https://github.com/LeoriusMalz/python_auth/actions/workflows/sast.yml)
+#### Статус SAST пайплайна:
+[![SAST Analysis](https://github.com/LeoriusMalz/python_auth/actions/workflows/sast.yml/badge.svg)](https://github.com/LeoriusMalz/python_auth/actions/workflows/sast.yml)
 
+#### Последние отчеты SAST анализа
+- [Bandit Report](reports/latest/bandit_report.txt)
+- [Flake8 Report](reports/latest/flake8_report.txt)
+- [Radon Complexity](reports/latest/radon_complexity.txt)
+- [Radon Maintainability](reports/latest/radon_mi.txt)
 
 TODO:
 
