@@ -4,10 +4,10 @@
 [![SAST Analysis](https://github.com/LeoriusMalz/python_auth/actions/workflows/sast.yml/badge.svg)](https://github.com/LeoriusMalz/python_auth/actions/workflows/sast.yml)
 
 #### Последние отчеты SAST анализа
-- [Bandit Report](reports/latest/bandit_report.txt)
-- [Flake8 Report](reports/latest/flake8_report.txt)
-- [Radon Complexity](reports/latest/radon_complexity.txt)
-- [Radon Maintainability](reports/latest/radon_mi.txt)
+- [Bandit Report](reports/bandit_report.txt)
+- [Flake8 Report](reports/flake8_report.txt)
+- [Radon Complexity](reports/radon_complexity.txt)
+- [Radon Maintainability](reports/radon_mi.txt)
 
 TODO:
 
