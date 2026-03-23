@@ -184,7 +184,8 @@ def login():
     if ATTEMPTS == 0:
         if DEBUG:
             print(f"ATTEMPTS == 0, real result of auth = {res}, "
-                  f"reason = {reason}; ATTEMPTS = {START_ATTEMPTS} (refreshing)")
+                  f"reason = {reason};"
+                  f"ATTEMPTS = {START_ATTEMPTS} (refreshing)")
             ATTEMPTS = START_ATTEMPTS
         show_bad_login()
     else:
@@ -210,7 +211,8 @@ def clear_fields():
 def show_help():
     """
     @brief Показывает окно с помощью
-    @details Отображает инструкцию по использованию и количество оставшихся попыток
+    @details Отображает инструкцию по
+    использованию и количество оставшихся попыток
     """
     mymessagebox(11,
                  11,
