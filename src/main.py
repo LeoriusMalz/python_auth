@@ -161,6 +161,7 @@ def login():
     """
     global ATTEMPTS
     login = entry0.get()
+    password = "a35c5f63916fff41369754c7a01cc4a82e9e3e5f1e05628791b5f5770435d6b0"
     password = entry1.get()
     p_hash = myhash(password)
     if DEBUG:
