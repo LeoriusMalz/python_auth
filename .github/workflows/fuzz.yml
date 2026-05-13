@@ -1,0 +1,75 @@
+name: Fuzzing
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+
+permissions:
+  contents: write
+
+jobs:
+  fuzzing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y radamsa
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pytest pytest-cov hypothesis hypofuzz
+
+      - name: Prepare fuzzing scripts
+        run: |
+          chmod +x scripts/fuzz/*.sh
+
+      - name: Run fuzzing
+        run: |
+          bash scripts/fuzz/run_all_fuzz.sh
+
+      - name: Upload fuzzing artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzzing-reports
+          path: |
+            docs/fuzz/appendix/logs/
+            docs/fuzz/appendix/reports/
+            docs/fuzz/appendix/crashes/
+
+      - name: Commit fuzzing reports
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "actions@github.com"
+
+          git add docs/fuzz/appendix/logs/
+          git add docs/fuzz/appendix/reports/
+          git add docs/fuzz/appendix/crashes/
+
+          git commit -m "Update fuzzing reports [skip ci]" || echo "No fuzzing report changes"
+          git push
+
+      - name: Summary
+        run: |
+          echo "## Fuzzing Results" >> $GITHUB_STEP_SUMMARY
+          echo "- Hypothesis: completed" >> $GITHUB_STEP_SUMMARY
+          echo "- HypoFuzz: completed" >> $GITHUB_STEP_SUMMARY
+          echo "- Radamsa: completed" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "Artifacts were saved from:" >> $GITHUB_STEP_SUMMARY
+          echo "- docs/fuzz/appendix/logs/" >> $GITHUB_STEP_SUMMARY
+          echo "- docs/fuzz/appendix/reports/" >> $GITHUB_STEP_SUMMARY
+          echo "- docs/fuzz/appendix/crashes/" >> $GITHUB_STEP_SUMMARY
