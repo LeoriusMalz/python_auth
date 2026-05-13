@@ -3,19 +3,19 @@
 m linux -- Python 3.10.20, pytest-9.0.3, pluggy-1.6.0
 rootdir: /home/runner/work/python_auth/python_auth
 plugins: hypothesis-6.152.7, cov-7.1.0, anyio-4.13.0
-collected 6 items
+collected 9 items
 
-tests/fuzz/test_hypothesis_auth.py ......
+tests/fuzz/test_hypothesis_auth.py .........
 
 ================================ tests coverage ================================
 _______________ coverage: platform linux, python 3.10.20-final-0 _______________
 
 Name                Stmts   Miss Branch BrPart  Cover   Missing
 ---------------------------------------------------------------
-src/auth_logic.py      18      3     10      4    75%   12, 19, 22, 24->27
+src/auth_logic.py      18      0     10      1    96%   24->27
 src/main.py            94     94     24      0     0%   28-265
 ---------------------------------------------------------------
-TOTAL                 112     97     34      4    14%
+TOTAL                 112     94     34      1    18%
 Coverage HTML written to dir docs/fuzz/appendix/reports/hypothesis/html
 Coverage XML written to file docs/fuzz/appendix/reports/hypothesis/coverage.xml
-============================== 6 passed in 15.08s ==============================
+============================== 9 passed in 15.04s ==============================

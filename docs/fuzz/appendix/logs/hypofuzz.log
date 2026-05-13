@@ -1,4 +1,4 @@
-.                                                                        [100%]
+..                                                                       [100%]
 ================================ tests coverage ================================
 _______________ coverage: platform linux, python 3.10.20-final-0 _______________
 
@@ -10,4 +10,4 @@ src/main.py            94     94     0%   28-265
 TOTAL                 112     97    13%
 Coverage HTML written to dir docs/fuzz/appendix/reports/hypofuzz/html
 Coverage XML written to file docs/fuzz/appendix/reports/hypofuzz/coverage.xml
-1 passed in 0.53s
+2 passed in 3.39s
