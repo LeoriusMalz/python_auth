@@ -62,12 +62,19 @@ jobs:
           git config --global user.name "github-actions"
           git config --global user.email "actions@github.com"
 
+          git pull --rebase origin main
+
           git add docs/fuzz/appendix/logs/
           git add docs/fuzz/appendix/reports/
           git add docs/fuzz/appendix/crashes/
 
-          git commit -m "Update fuzzing reports [skip ci]" || echo "No fuzzing report changes"
-          git push
+          if git diff --cached --quiet; then
+            echo "No fuzzing report changes"
+            exit 0
+          fi
+
+          git commit -m "Update fuzzing reports [skip ci]"
+          git push origin main
 
       - name: Summary
         run: |
