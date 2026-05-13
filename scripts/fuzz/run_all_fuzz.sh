@@ -9,6 +9,8 @@ bash scripts/fuzz/run_hypothesis.sh | tee docs/fuzz/appendix/logs/hypothesis.log
 
 echo "[*] Running HypoFuzz..."
 
+$HYPOFUZZ_LOG_FILE="docs/fuzz/appendix/logs/hypofuzz.log"
+
 (
   export PYTHONPATH="$(pwd)"
 
@@ -22,7 +24,8 @@ echo "[*] Running HypoFuzz..."
     tests/fuzz/test_hypofuzz_auth.py
 ) 2>&1 | tee docs/fuzz/appendix/logs/hypofuzz.log || true
 
-echo "[*] HypoFuzz finished"
+echo "[*] HypoFuzz fuzzing finished"
+echo "[*] Log saved to $HYPOFUZZ_LOG_FILE"
 
 
 if command -v radamsa >/dev/null 2>&1; then

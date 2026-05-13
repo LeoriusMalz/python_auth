@@ -8,6 +8,7 @@ mkdir -p docs/fuzz/appendix/logs
 
 SEED_DIR="tests/fuzz/seeds"
 HARNESS="tests/fuzz/test_radamsa_auth.py"
+LOG_FILE="docs/fuzz/appendix/logs/radamsa.log"
 
 for i in $(seq 1 1000); do
   seed=$(find "$SEED_DIR" -type f | python3 -c "import sys,random; print(random.choice([l.strip() for l in sys.stdin if l.strip()]))")
@@ -23,3 +24,4 @@ for i in $(seq 1 1000); do
 done
 
 echo "[*] Radamsa fuzzing finished"
+echo "[*] Log saved to $LOG_FILE"
