@@ -22,10 +22,17 @@ jobs:
         with:
           python-version: "3.10"
 
-      - name: Install system dependencies
+      - name: Install Radamsa
         run: |
           sudo apt-get update
-          sudo apt-get install -y radamsa
+          sudo apt-get install -y git make gcc
+
+          git clone https://gitlab.com/akihe/radamsa.git /tmp/radamsa
+          cd /tmp/radamsa
+          make
+          sudo make install
+
+          radamsa --version
 
       - name: Install Python dependencies
         run: |
