@@ -50,3 +50,17 @@ def test_valid_vovuas_credentials():
 def test_invalid_credentials():
     assert authenticate("admin", "wrong") is False
     assert authenticate("unknown", "2003") is False
+
+def test_myhash_rejects_non_string():
+    with pytest.raises(TypeError):
+        myhash(123)
+
+
+def test_authenticate_rejects_non_string_login():
+    with pytest.raises(TypeError):
+        authenticate(123, "password")
+
+
+def test_authenticate_rejects_non_string_password():
+    with pytest.raises(TypeError):
+        authenticate("admin", 123)
