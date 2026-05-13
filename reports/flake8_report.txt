@@ -1,1 +1,3 @@
-./src/main.py:164:80: E501 line too long (81 > 79 characters)
+./src/auth_logic.py:5:80: E501 line too long (89 > 79 characters)
+./src/auth_logic.py:6:80: E501 line too long (89 > 79 characters)
+./src/auth_logic.py:33:38: W292 no newline at end of file

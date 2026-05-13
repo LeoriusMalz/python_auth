@@ -1,31 +1,22 @@
-Run started:2026-04-01 12:13:44.014540+00:00
+Run started:2026-05-13 09:07:13.331211+00:00
 
 Test results:
->> Issue: [B105:hardcoded_password_string] Possible hardcoded password: 'a35c5f63916fff41369754c7a01cc4a82e9e3e5f1e05628791b5f5770435d6b0'
-   Severity: Low   Confidence: Medium
-   CWE: CWE-259 (https://cwe.mitre.org/data/definitions/259.html)
-   More Info: https://bandit.readthedocs.io/en/1.9.4/plugins/b105_hardcoded_password_string.html
-   Location: ./src/main.py:164:15
-163	    login = entry0.get()
-164	    password = "a35c5f63916fff41369754c7a01cc4a82e9e3e5f1e05628791b5f5770435d6b0"
-165	    password = entry1.get()
-
---------------------------------------------------
+	No issues identified.
 
 Code scanned:
-	Total lines of code: 219
+	Total lines of code: 199
 	Total lines skipped (#nosec): 0
 	Total potential issues skipped due to specifically being disabled (e.g., #nosec BXXX): 0
 
 Run metrics:
 	Total issues (by severity):
 		Undefined: 0
-		Low: 1
+		Low: 0
 		Medium: 0
 		High: 0
 	Total issues (by confidence):
 		Undefined: 0
 		Low: 0
-		Medium: 1
+		Medium: 0
 		High: 0
 Files skipped (0):
