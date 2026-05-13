@@ -26,7 +26,7 @@
 """
 
 import tkinter as tk
-from hashlib import sha256
+from auth_logic import myhash, authenticate, RELEASE_DATABASE
 
 # @var DEBUG
 # @brief Флаг отладочного режима
@@ -49,19 +49,6 @@ ATTEMPTS = START_ATTEMPTS
 DATABASE = dict()
 
 
-def myhash(s):
-    """
-    @brief Вычисляет SHA-256 хеш строки
-    @param s Входная строка для хеширования
-    @return HEX-строка с хешем длиной 64 символа
-
-    @details
-    Функция использует стандартную библиотеку hashlib.
-    Хеш возвращается в шестнадцатеричном формате.
-    """
-    return sha256(s.encode('utf-8')).hexdigest()
-
-
 # Инициализация базы данных в зависимости от режима
 if DEBUG:
     # @var title
@@ -75,10 +62,7 @@ else:
     # @var title
     # @brief Заголовок окна в релизном режиме
     title = "Релизная версия"
-    DATABASE["admin"] = ("a35c5f63916fff41369754c7a01cc4a8"
-                         "2e9e3e5f1e05628791b5f5770435d6b0")  # @dm1n
-    DATABASE["vovuas"] = ("77459b9b941bcb4714d0c121313c900e"
-                          "cf30541d158eb2b9b178cdb8eca6457e")  # 2003
+    DATABASE.update(RELEASE_DATABASE)
 
 # @var window
 # @brief Главное окно приложения
@@ -145,58 +129,39 @@ def show_bad_login():
 
 
 def login():
-    """
-    @brief Выполняет аутентификацию пользователя
-    @details Проверяет логин и пароль, управляет количеством попыток
-
-    @par Алгоритм работы:
-    1. Получает логин и пароль из полей ввода
-    2. Хеширует пароль
-    3. Проверяет наличие логина в базе данных
-    4. Сравнивает хеши паролей
-    5. Обрабатывает результат с учетом оставшихся попыток
-
-    @note В отладочном режиме выводит подробную информацию в
-    консоль, а также восстанавливает количество доступных попыток
-    """
     global ATTEMPTS
-    login = entry0.get()
-    password = entry1.get()
-    p_hash = myhash(password)
-    if DEBUG:
-        print(f"login = {login}, password = {password}, hash = {p_hash}")
-    res = False
-    reason = "login found and hash is right"
+
+    login_value = entry0.get()
+    password_value = entry1.get()
+
     try:
-        real_hash = DATABASE[login]
-        if p_hash != real_hash:
-            reason = f"wrong password hash and right = {real_hash}"
-        else:
-            res = True
-    except KeyError as e:
-        if DEBUG:
-            print(f"database KeyError, key {e} not found")
-        reason = "login not found in database"
+        res = authenticate(login_value, password_value)
+
     except Exception:
         if DEBUG:
             print("Unexpected exception during login!")
         raise
+
     if ATTEMPTS == 0:
         if DEBUG:
-            print(f"ATTEMPTS == 0, real result of auth = {res}, "
-                  f"reason = {reason};"
-                  f"ATTEMPTS = {START_ATTEMPTS} (refreshing)")
+            print(f"ATTEMPTS == 0; ATTEMPTS = {START_ATTEMPTS} (refreshing)")
             ATTEMPTS = START_ATTEMPTS
+
         show_bad_login()
+
     else:
         if res:
             if DEBUG:
-                print(f"good auth, reason = {reason}")
+                print("good auth")
+
             show_good_login()
+
         else:
             ATTEMPTS -= 1
+
             if DEBUG:
-                print(f"bad auth, reason = {reason}")
+                print("bad auth")
+
             show_bad_login()
 
 

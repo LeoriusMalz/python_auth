@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/Users/l[!] HypoFuzz crashed or stopped unexpectedly
+[!] Check log: docs/fuzz/appendix/logs/hypofuzz.log
+  from hypofuzz import fuzz
+ImportError: cannot import name 'fuzz' from 'hypofuzz' (/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/site-packages/hypofuzz/__init__.py)
