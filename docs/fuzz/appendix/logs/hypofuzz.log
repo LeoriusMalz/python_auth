@@ -1,13 +1,13 @@
 .                                                                        [100%]
 ================================ tests coverage ================================
-_______________ coverage: platform darwin, python 3.13.7-final-0 _______________
+_______________ coverage: platform linux, python 3.10.20-final-0 _______________
 
 Name                Stmts   Miss  Cover   Missing
 -------------------------------------------------
-src/auth_logic.py      18      4    78%   12, 19, 22, 33
+src/auth_logic.py      18      3    83%   12, 19, 22
 src/main.py            94     94     0%   28-265
 -------------------------------------------------
-TOTAL                 112     98    12%
+TOTAL                 112     97    13%
 Coverage HTML written to dir docs/fuzz/appendix/reports/hypofuzz/html
 Coverage XML written to file docs/fuzz/appendix/reports/hypofuzz/coverage.xml
-1 passed in 0.37s
+1 passed in 0.53s
