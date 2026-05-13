@@ -1,14 +1,14 @@
 [*] Hypothesis fuzzing finished
 [*] Log saved to docs/fuzz/appendix/logs/hypothesis.log
-m darwin -- Python 3.13.7, pytest-9.0.3, pluggy-1.6.0
-rootdir: /Users/lev.maltsev/Documents/python_auth_forked
-plugins: cov-7.1.0, hypothesis-6.152.6, anyio-4.10.0
+m linux -- Python 3.10.20, pytest-9.0.3, pluggy-1.6.0
+rootdir: /home/runner/work/python_auth/python_auth
+plugins: hypothesis-6.152.7, cov-7.1.0, anyio-4.13.0
 collected 6 items
 
 tests/fuzz/test_hypothesis_auth.py ......
 
 ================================ tests coverage ================================
-_______________ coverage: platform darwin, python 3.13.7-final-0 _______________
+_______________ coverage: platform linux, python 3.10.20-final-0 _______________
 
 Name                Stmts   Miss Branch BrPart  Cover   Missing
 ---------------------------------------------------------------
@@ -18,4 +18,4 @@ src/main.py            94     94     24      0     0%   28-265
 TOTAL                 112     97     34      4    14%
 Coverage HTML written to dir docs/fuzz/appendix/reports/hypothesis/html
 Coverage XML written to file docs/fuzz/appendix/reports/hypothesis/coverage.xml
-============================== 6 passed in 5.37s ===============================
+============================== 6 passed in 15.08s ==============================

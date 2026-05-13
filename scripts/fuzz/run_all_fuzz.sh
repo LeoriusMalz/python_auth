@@ -9,7 +9,7 @@ bash scripts/fuzz/run_hypothesis.sh | tee docs/fuzz/appendix/logs/hypothesis.log
 
 echo "[*] Running HypoFuzz..."
 
-$HYPOFUZZ_LOG_FILE="docs/fuzz/appendix/logs/hypofuzz.log"
+HYPOFUZZ_LOG_FILE="docs/fuzz/appendix/logs/hypofuzz.log"
 
 (
   export PYTHONPATH="$(pwd)"
@@ -22,7 +22,7 @@ $HYPOFUZZ_LOG_FILE="docs/fuzz/appendix/logs/hypofuzz.log"
     --cov-report=html:docs/fuzz/appendix/reports/hypofuzz/html \
     --cov-report=xml:docs/fuzz/appendix/reports/hypofuzz/coverage.xml \
     tests/fuzz/test_hypofuzz_auth.py
-) 2>&1 | tee docs/fuzz/appendix/logs/hypofuzz.log || true
+) 2>&1 | tee "$HYPOFUZZ_LOG_FILE" || true
 
 echo "[*] HypoFuzz fuzzing finished"
 echo "[*] Log saved to $HYPOFUZZ_LOG_FILE"
